@@ -15,8 +15,8 @@ test = false
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-flipperzero = "0.1.0"
-flipperzero-sys = "0.1.0"
+flipperzero = { version = "0.2.0-alpha", path = "../../../flipperzero-rs/crates/flipperzero" }
+flipperzero-sys = { version = "0.2.0-alpha", path = "../../../flipperzero-rs/crates/sys" }
 
 [profile.release]
 opt-level = "z"

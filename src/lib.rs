@@ -10,7 +10,8 @@ use core::ptr;
 use core::time::Duration;
 
 extern crate flipperzero;
-use flipperzero::furi::{Stdout, sleep};
+use flipperzero::furi::io::Stdout;
+use flipperzero::furi::thread::sleep;
 use flipperzero_sys as sys;
 use flipperzero_sys::c_string;
 use flipperzero_sys::canvas::Canvas;
@@ -35,14 +36,14 @@ pub extern "C" fn hello_rust_app(_args: *mut u8) -> i32 {
         let view_port = sys::view_port::alloc();
         sys::view_port::draw_callback_set(view_port, draw_callback, ptr::null_mut());
 
-        let gui = sys::furi::record_open(RECORD_GUI) as *mut Gui;
+        let gui = sys::furi::record::open(RECORD_GUI) as *mut Gui;
         sys::gui::add_view_port(gui, view_port, GuiLayer::Fullscreen);
 
         sleep(Duration::from_secs(1));
 
         sys::view_port::enabled_set(view_port, false);
         sys::gui::remove_view_port(gui, view_port);
-        sys::furi::record_close(RECORD_GUI);
+        sys::furi::record::close(RECORD_GUI);
         sys::view_port::free(view_port);
     }
 
