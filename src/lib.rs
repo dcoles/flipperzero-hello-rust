@@ -12,6 +12,7 @@ use core::time::Duration;
 extern crate flipperzero;
 use flipperzero::furi::io::Stdout;
 use flipperzero::furi::thread::sleep;
+use flipperzero::furi::sync::Mutex;
 use flipperzero_sys as sys;
 use flipperzero_sys::c_string;
 use flipperzero_sys::canvas::Canvas;
@@ -29,8 +30,12 @@ pub extern "C" fn draw_callback(canvas: *mut Canvas, _context: *mut c_void) {
 pub extern "C" fn hello_rust_app(_args: *mut u8) -> i32 {
     let mut stdout = Stdout;
 
-    write!(&mut stdout, "Hello, Rust! \u{1F980}\r\n").unwrap();
-    stdout.flush().unwrap();
+    let message = Mutex::new("Hello, Rust! \u{1F980}");
+    {
+        let message = message.lock().unwrap();
+        write!(&mut stdout, "{}\r\n", *message).unwrap();
+        stdout.flush().unwrap();
+    }
 
     unsafe {
         let view_port = sys::view_port::alloc();
