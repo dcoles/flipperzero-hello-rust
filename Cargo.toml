@@ -17,6 +17,7 @@ test = false
 [dependencies]
 flipperzero = { version = "0.2.0-alpha", path = "../../../flipperzero-rs/crates/flipperzero" }
 flipperzero-sys = { version = "0.2.0-alpha", path = "../../../flipperzero-rs/crates/sys" }
+flipperzero-rt = { version = "0.2.0-alpha", path = "../../../flipperzero-rs/crates/rt" }
 
 [profile.release]
 opt-level = "z"
